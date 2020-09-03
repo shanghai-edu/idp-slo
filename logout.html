@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+    <title>idp注销</title>
+
+    <!-- js/css -->
+    <script>
+        function getQueryVariable(query, variable) {
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == variable) {
+                    return pair[1];
+                }
+            }
+            return (false);
+        }
+    </script>
+
+</head>
+
+<body>
+    <script>
+        var domain = window.location.href.split('/'); 
+	console.log(domain)
+        domain = 'https://' + domain[2] + '/'
+        logout_url = domain + 'idp/profile/Logout'
+	console.log(window.location.href.substring(1))
+        if (getQueryVariable(window.location.search.substring(1), 'redirect_url') !== false) {
+            var iframe = document.createElement('iframe');
+            iframe.src = logout_url
+            iframe.id = 'idp_lougout'
+	    iframe.style = 'display:none;'
+            document.body.appendChild(iframe);
+            setInterval(function () {
+                console.log(window.parent.document.getElementById("idp_lougout").contentWindow.location.href);
+                now_url = window.parent.document.getElementById("idp_lougout").contentWindow.location.href.split("?")[0]
+		console.log(now_url)
+                if (now_url == logout_url) {
+                    window.location.href = getQueryVariable(window.location.search.substring(1), 'redirect_url');
+                }
+            }, 3000);
+        } else {
+            window.location.href = logout_url
+        }
+    </script>
+
+</body>
+
+</html>
