@@ -23,23 +23,21 @@
 
 <body>
     <script>
-        var domain = window.location.href.split('/'); 
-	console.log(domain)
+        var domain = window.location.href.split('/');
         domain = 'https://' + domain[2] + '/'
         logout_url = domain + 'idp/profile/Logout'
-	console.log(window.location.href.substring(1))
         if (getQueryVariable(window.location.search.substring(1), 'redirect_url') !== false) {
             var iframe = document.createElement('iframe');
             iframe.src = logout_url
             iframe.id = 'idp_lougout'
-	    iframe.style = 'display:none;'
+            iframe.style = 'display:none;'
             document.body.appendChild(iframe);
             setInterval(function () {
-                console.log(window.parent.document.getElementById("idp_lougout").contentWindow.location.href);
-                now_url = window.parent.document.getElementById("idp_lougout").contentWindow.location.href.split("?")[0]
-		console.log(now_url)
+                now_url = window.parent.document.getElementById("idp_lougout").contentWindow.location.href
+                    .split("?")[0]
                 if (now_url == logout_url) {
-                    window.location.href = getQueryVariable(window.location.search.substring(1), 'redirect_url');
+                    window.location.href = getQueryVariable(window.location.search.substring(1),
+                    'redirect_url');
                 }
             }, 3000);
         } else {
