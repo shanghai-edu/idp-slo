@@ -26,11 +26,20 @@
 
 我们这里仅提供tomcat的部署方法，无需安装任何东西。
 
-### 复制文件
+### 下载文件
 
-在tomcat/webapp 下新建文件夹logout
+安装git服务
 
-将网页拷贝至tomcat/webapp/logout下
+```bash
+yum install git
+```
+
+ 拉取项目
+
+```bash
+cd /opt
+git clone https://github.com/shanghai-edu/idp-slo.git
+```
 
 ### 修改 server.xml
 
@@ -39,7 +48,7 @@
 在文件末尾</Host>的上方添加如下代码
 
 ```xml
-<Context path="logout" docBase="logout" debug="0" reloadable="true" crossContext="true"/>
+<Context path="logout" docBase="/opt/idp-slo/src/" debug="0" reloadable="true" crossContext="true"/>
 ```
 
 其中docBase为webapp目录下对应的文件夹，path为访问的路径

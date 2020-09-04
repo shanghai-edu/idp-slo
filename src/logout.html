@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+    <title>idp注销</title>
+
+    <!-- js/css -->
+    <script>
+        function getQueryVariable(query, variable) {
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == variable) {
+                    return pair[1];
+                }
+            }
+            return (false);
+        }
+    </script>
+
+<style type="text/css">
+    body {
+        background: #eaecfa;
+    }
+
+    .loader {
+        width: 250px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        font-family: helvetica, arial, sans-serif;
+        text-transform: uppercase;
+        font-weight: 900;
+        color: #ce4233;
+        letter-spacing: 0.2em;
+    }
+
+    .loader::before,
+    .loader::after {
+        content: "";
+        display: block;
+        width: 15px;
+        height: 15px;
+        background: #ce4233;
+        position: absolute;
+        -webkit-animation: load 0.7s infinite alternate ease-in-out;
+        animation: load 0.7s infinite alternate ease-in-out;
+    }
+
+    .loader::before {
+        top: 0;
+    }
+
+    .loader::after {
+        bottom: 0;
+    }
+
+    @-webkit-keyframes load {
+        0% {
+            left: 0;
+            height: 30px;
+            width: 15px;
+        }
+
+        50% {
+            height: 8px;
+            width: 40px;
+        }
+
+        100% {
+            left: 235px;
+            height: 30px;
+            width: 15px;
+        }
+    }
+
+    @keyframes load {
+        0% {
+            left: 0;
+            height: 30px;
+            width: 15px;
+        }
+
+        50% {
+            height: 8px;
+            width: 40px;
+        }
+
+        100% {
+            left: 235px;
+            height: 30px;
+            width: 15px;
+        }
+    }
+</style>
+
+</head>
+
+<body>
+    <script>
+        var domain = window.location.href.split('/');
+        domain = 'https://' + domain[2] + '/'
+        logout_url = domain + 'idp/profile/Logout'
+        if (getQueryVariable(window.location.search.substring(1), 'redirect_url') !== false) {
+            var iframe = document.createElement('iframe');
+            iframe.src = logout_url
+            iframe.id = 'idp_lougout'
+            iframe.style = 'display:none;'
+            document.body.appendChild(iframe);
+            setInterval(function () {
+                now_url = window.parent.document.getElementById("idp_lougout").contentWindow.location.href
+                    .split("?")[0]
+                if (now_url == logout_url) {
+                    window.location.href = getQueryVariable(window.location.search.substring(1),
+                    'redirect_url');
+                }
+            }, 3000);
+        } else {
+            window.location.href = logout_url
+        }
+    </script>
+
+<div class="loader">注销中</div>
+
+</body>
+
+</html>
