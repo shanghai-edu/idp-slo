@@ -72,7 +72,7 @@ git clone https://github.com/shanghai-edu/idp-slo.git
                prefix="localhost_access_log" suffix=".txt"
                pattern="%h %l %u %t &quot;%r&quot; %s %b" />
   <!-- slo网页部署 -->
-<Context path="logout" docBase="logout" debug="0" reloadable="true" crossContext="true"/>
+<Context path="logout" docBase="/opt/idp-slo/src/" debug="0" reloadable="true" crossContext="true"/>
 
 </Host>
     </Engine>
